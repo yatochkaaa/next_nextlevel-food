@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import classes from "./meals-slug.module.css";
 import { getMeal } from "@/../lib/meals";
 
@@ -11,7 +12,11 @@ interface MealsSlugPageProps {
 export default async function MealsSlugPage({ params }: MealsSlugPageProps) {
   const meal: any = await getMeal(params.slug);
 
-  meal.instructions = meal.instructions.replace(/\n/g, '<br />');
+  if (!meal) {
+    notFound();
+  }
+
+  meal.instructions = meal.instructions.replace(/\n/g, "<br />");
 
   return (
     <>
