@@ -4,13 +4,14 @@ import classes from "./meals-slug.module.css";
 import { getMeal } from "@/../lib/meals";
 
 interface MealsSlugPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function MealsSlugPage({ params }: MealsSlugPageProps) {
-  const meal: any = await getMeal(params.slug);
+  const { slug } = await params;
+  const meal: any = await getMeal(slug);
 
   if (!meal) {
     notFound();
